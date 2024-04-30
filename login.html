@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="home.css">
+    <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+
+<body>
+
+    <div id="header">
+        <a href="index.html">
+        <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
+        </a>
+        
+        <div id="header-icons">
+            <span>Track Order</span>
+            <img src="icons/help.svg" alt="Help" width="35px" height="35px">
+            <div id="cart-icon">
+                <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
+                <span class="item-count">0</span>
+            </div>
+            <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+        </div>
+    </div>
+
+    <!-- Add this code after the existing navbar code -->
+    <div class="login-container">
+        <h1>SIGN UP TO SAVE</h1>
+        <div class="toggle-container">
+            <button class="toggle-btn active" id="signup-btn">SIGN UP</button>
+            <button class="toggle-btn" id="login-btn">LOG IN</button>
+        </div>
+        <form id="signup-form">
+            <input type="text" placeholder="Username" id="username-input" required>
+            <input type="email" placeholder="name@example.com" required>
+            <input type="password" placeholder="Password" id="signup-password" required>
+            <div class="password-toggle">
+                <input type="checkbox" id="show-signup-password">
+                <label for="show-signup-password">Show Password</label>
+            </div>
+            <button type="submit" class="submit-btn" id="register-btn">REGISTER</button>
+            <p>By Clicking "Register" you agree to the Terms of Use and Privacy Policy (there isnt any)</p>
+        </form>
+        <form id="login-form" class="hidden">
+            <input type="email" placeholder="name@example.com" required>
+            <input type="password" placeholder="Password" id="login-password" required>
+            <div class="password-toggle">
+                <input type="checkbox" id="show-login-password">
+                <label for="show-login-password">Show Password</label>
+            </div>
+            <button type="submit" class="submit-btn" id="login-btn">LOG IN</button>
+        </form>
+    </div>
+    <script>
+        const signupForm = document.getElementById('signup-form');
+        const loginForm = document.getElementById('login-form');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const usernameInput = document.getElementById('username-input');
+        const registerBtn = document.getElementById('register-btn');
+        const signupPasswordInput = document.getElementById('signup-password');
+        const loginPasswordInput = document.getElementById('login-password');
+        const showSignupPasswordCheckbox = document.getElementById('show-signup-password');
+        const showLoginPasswordCheckbox = document.getElementById('show-login-password');
+
+        signupBtn.addEventListener('click', () => {
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            signupBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+            usernameInput.style.display = 'block';
+            registerBtn.textContent = 'REGISTER';
+        });
+
+        loginBtn.addEventListener('click', () => {
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            signupBtn.classList.remove('active');
+            loginBtn.classList.add('active');
+            usernameInput.style.display = 'none';
+            registerBtn.textContent = 'LOG IN';
+        });
+
+        showSignupPasswordCheckbox.addEventListener('change', () => {
+            signupPasswordInput.type = showSignupPasswordCheckbox.checked ? 'text' : 'password';
+        });
+
+        showLoginPasswordCheckbox.addEventListener('change', () => {
+            loginPasswordInput.type = showLoginPasswordCheckbox.checked ? 'text' : 'password';
+        });
+    </script>
+</body>
+
+</html>
