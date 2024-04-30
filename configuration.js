@@ -50,10 +50,9 @@ let configuration = {
 
 
 async function login() {
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
+    let username = document.getElementById('login-username').value;
+    let password = document.getElementById('login-password').value;
     let customer = {username: username, password: password};
-
     let request = {
         method: 'POST',
         headers: {

@@ -5,6 +5,8 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="home.css">
     <link rel="stylesheet" type="text/css" href="login.css">
+    <script src="register.js" defer></script>
+    <script src="configuration.js" defer></script>
 </head>
 
 <body>
@@ -13,7 +15,7 @@
         <a href="index.html">
         <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
         </a>
-        
+
         <div id="header-icons">
             <span>Track Order</span>
             <img src="icons/help.svg" alt="Help" width="35px" height="35px">
@@ -25,7 +27,6 @@
         </div>
     </div>
 
-    <!-- Add this code after the existing navbar code -->
     <div class="login-container">
         <h1>SIGN UP TO SAVE</h1>
         <div class="toggle-container">
@@ -33,8 +34,8 @@
             <button class="toggle-btn" id="login-btn">LOG IN</button>
         </div>
         <form id="signup-form">
-            <input type="text" placeholder="Username" id="username-input" required>
-            <input type="email" placeholder="name@example.com" required>
+            <input type="text" placeholder="Username" id="signup-username" required>
+            <input type="email" placeholder="name@example.com" id="signup-email" required>
             <input type="password" placeholder="Password" id="signup-password" required>
             <div class="password-toggle">
                 <input type="checkbox" id="show-signup-password">
@@ -43,8 +44,8 @@
             <button type="submit" class="submit-btn" id="register-btn">REGISTER</button>
             <p>By Clicking "Register" you agree to the Terms of Use and Privacy Policy (there isnt any)</p>
         </form>
-        <form id="login-form" class="hidden">
-            <input type="email" placeholder="name@example.com" required>
+        <form id="login-form">
+            <input type="text" placeholder="Username" id="login-username"  required>
             <input type="password" placeholder="Password" id="login-password" required>
             <div class="password-toggle">
                 <input type="checkbox" id="show-login-password">
@@ -58,28 +59,42 @@
         const loginForm = document.getElementById('login-form');
         const signupBtn = document.getElementById('signup-btn');
         const loginBtn = document.getElementById('login-btn');
-        const usernameInput = document.getElementById('username-input');
+        const emailInput = document.getElementById('signup-email');
         const registerBtn = document.getElementById('register-btn');
         const signupPasswordInput = document.getElementById('signup-password');
         const loginPasswordInput = document.getElementById('login-password');
         const showSignupPasswordCheckbox = document.getElementById('show-signup-password');
         const showLoginPasswordCheckbox = document.getElementById('show-login-password');
 
+        const signupEvent = (event) => {
+            event.preventDefault();
+            signup();
+        }
+
+        const loginEvent = (event) => {
+            event.preventDefault();
+            login();
+        }
+
+        signupForm.addEventListener('submit', signupEvent);
+        loginForm.addEventListener('submit', loginEvent);
+        
         signupBtn.addEventListener('click', () => {
             signupForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
             signupBtn.classList.add('active');
             loginBtn.classList.remove('active');
-            usernameInput.style.display = 'block';
+            emailInput.style.display = 'block';
             registerBtn.textContent = 'REGISTER';
         });
 
         loginBtn.addEventListener('click', () => {
             signupForm.classList.add('hidden');
+            registerBtn.classList.remove('active');
             loginForm.classList.remove('hidden');
             signupBtn.classList.remove('active');
             loginBtn.classList.add('active');
-            usernameInput.style.display = 'none';
+            emailInput.style.display = 'none';
             registerBtn.textContent = 'LOG IN';
         });
 
