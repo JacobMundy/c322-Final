@@ -22,12 +22,12 @@ function getToken() {
 function setToken(token) {
     localStorage
     .setItem('token', token);
-    // updateNavigationBar();
+    updateNavigationBar();
 }
 
 function removeToken() {
     localStorage.removeItem('token');
-    // updateNavigationBar();
+    updateNavigationBar();
 }
 
 let configuration = {
@@ -36,17 +36,22 @@ let configuration = {
     token: () => getToken()
 };
 
-// updateNavigationBar();
-// function updateNavigationBar() {
-//     const navbar = document.getElementsByClassName('topnav');
-//     console.log(navbar);
-//     let loginTag = navbar;
-//     if (configuration.isLoggedIn()) {
-//         loginTag.innerHTML = `<li class="right"><a href="#" onclick="logout()">Logout</a></li>`
-//     } else {
-//         loginTag.innerHTML = `<li class="right"><a href="login.html">Login</a></li>`
-//     }   
-// }
+
+
+updateNavigationBar();
+function updateNavigationBar() {
+    if (isLoggedIn()) {
+        document.getElementById('header-icons').innerHTML += `
+        <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+        `;
+    } else {
+        document.getElementById('header-icons').innerHTML += `
+        <a href="login.html">
+        <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+        </a>
+        `;
+    }
+}
 
 
 async function login() {

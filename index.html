@@ -18,7 +18,6 @@
                 <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
                 <span class="item-count">0</span>
             </div>
-            <img src="icons/user.svg" alt="Account" width="35px" height="35px">
         </div>
     </div>
 
@@ -29,6 +28,30 @@
             <p>Shop Mother's Day flowers from now until May 13th</p>
         </div>
         <img id="image-banner" src="banner.jpg" alt="Banner">
+    </div>
+
+    <div id="flower-popup" class="hidden">
+        <div class="popup-content">
+            <img id="popup-image" src="" alt="Flower Image" style="width: 400px;">
+            <div class="popup-details">
+                <h2 id="popup-name"></h2>
+                <p id="popup-price"></p>
+                <div class="purchasing-options">
+                    <div class="subscription-option">
+                        <input type="radio" id="subscription" name="purchase-option">
+                        <label for="subscription">Start a Subscription: $52 + free shipping</label>
+                        <p>Best Value: Up to 20% off + free shipping on subscription deliveries.</p>
+                        <p>Flexible: Pick your flowers, date & recipient every month, or set it & forget it.</p>
+                        <p>No Obligations: Skip as often as you like. Cancel anytime.</p>
+                    </div>
+                    <div class="one-time-option">
+                        <input type="radio" id="one-time" name="purchase-option" checked>
+                        <label for="one-time">One time purchase: <span id="popup-one-time-price"></span></label>
+                    </div>
+                </div>
+                <button id="add-to-basket">ADD TO BASKET</button>
+            </div>
+        </div>
     </div>
 
     <div id="flower-collection">
@@ -109,6 +132,52 @@
             </div>
         </div>
     </div>
+    <script src="configuration.js"></script>
+    <script>
+        const flowerItems = document.querySelectorAll('.flower-item');
+        const flowerPopup = document.getElementById('flower-popup');
+        const popupImage = document.getElementById('popup-image');
+        const popupName = document.getElementById('popup-name');
+        const popupPrice = document.getElementById('popup-price');
+        const popupOneTimePrice = document.getElementById('popup-one-time-price');
+        const addToBasket = document.getElementById('add-to-basket');
+
+
+        addToBasket.addEventListener('click', () => {
+            setLocalStorage();
+            window.location.href = 'order.html';
+        });
+        
+        flowerItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const flowerName = item.querySelector('h3').textContent;
+                const flowerImage = item.querySelector('img').src;
+                const flowerPrice = item.querySelector('p').textContent;
+
+                popupImage.src = flowerImage;
+                popupName.textContent = flowerName;
+                popupPrice.textContent = flowerPrice;
+                popupOneTimePrice.textContent = flowerPrice.replace('from ', '');
+
+                flowerPopup.classList.remove('hidden');
+            });
+        });
+        
+        function setLocalStorage() {
+            flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+            const flower = {
+                name: popupName.textContent,
+                price: popupPrice.textContent,
+                image: popupImage.src
+            };
+            flowers.push(flower);
+            localStorage.setItem('flowers', JSON.stringify(flowers));
+        }
+        <!-- set cart -->
+        const itemCount = document.querySelector('.item-count');
+        var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+        itemCount.textContent = flowers.length;
+    </script>
 </body>
 
 </html>

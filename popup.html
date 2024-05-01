@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flower Details</title>
+    <style>
+        /* Add styling for the popup */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+        }
+
+        img {
+            max-width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup">
+        <img id="flower-image" src="" alt="Flower Image">
+        <h2 id="flower-name"></h2>
+        <p id="flower-price"></p>
+        <button id="continue-btn">Continue to Order</button>
+    </div>
+
+    <script>
+        const flowerName = localStorage.getItem('flowerName');
+        const flowerImage = localStorage.getItem('flowerImage');
+        const flowerPrice = localStorage.getItem('flowerPrice');
+
+        document.getElementById('flower-name').textContent = flowerName;
+        document.getElementById('flower-image').src = flowerImage;
+        document.getElementById('flower-price').textContent = flowerPrice;
+
+        const continueBtn = document.getElementById('continue-btn');
+        continueBtn.addEventListener('click', () => {
+            window.location.href = 'order.html';
+        });
+    </script>
+</body>
+</html>

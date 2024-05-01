@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Page</title>
+    <link rel="stylesheet" type="text/css" href="home.css">
+</head>
+<body>
+    <div class="flower-grid">
+
+    </div>
+    <div id="order-form">
+        <h1>Order Form</h1>
+        <form>
+            <input type="text" placeholder="Name
+            " required>
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="Address" required>
+            
+
+    </div>
+    <script src="configuration.js"></script>
+    <script>
+        const orderForm = document.getElementById('order-form');
+        const flowerGrid = document.querySelector('.flower-grid');
+        const flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+
+        flowers.forEach(flower => {
+            const flowerItem = document.createElement('div');
+            flowerItem.classList.add('flower-item');
+
+            const flowerImage = document.createElement('img');
+            flowerImage.src = flower.image;
+            flowerImage.alt = flower.name;
+            flowerImage.width = 200;
+            flowerItem.appendChild(flowerImage);
+
+            const flowerName = document.createElement('h3');
+            flowerName.textContent = flower.name;
+            flowerItem.appendChild(flowerName);
+
+            const flowerPrice = document.createElement('p');
+            flowerPrice.textContent = flower.price;
+            flowerItem.appendChild(flowerPrice);
+
+            flowerGrid.appendChild(flowerItem);
+            
+        });
+        if (!isLoggedIn()) {
+            signupBtn.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
