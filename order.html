@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Order Page</title>
     <link rel="stylesheet" type="text/css" href="home.css">
 </head>
+
 <body>
+    <div id="header">
+        <a href="index.html">
+            <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
+        </a>
+        <div id="header-icons">
+            <span>Track Order</span>
+            <img src="icons/help.svg" alt="Help" width="35px" height="35px">
+            <div id="cart-icon">
+                <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
+                <span class="item-count">0</span>
+            </div>
+        </div>
+    </div>
+
     <div class="flower-grid">
 
     </div>
+
     <div id="order-form">
         <h1>Order Form</h1>
         <form>
@@ -15,7 +32,7 @@
             " required>
             <input type="email" placeholder="Email" required>
             <input type="text" placeholder="Address" required>
-            
+
 
     </div>
     <script src="configuration.js"></script>
@@ -23,6 +40,11 @@
         const orderForm = document.getElementById('order-form');
         const flowerGrid = document.querySelector('.flower-grid');
         const flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+
+        <!-- set cart -->
+        const itemCount = document.querySelector('.item-count');
+        itemCount.textContent = flowers.length;
+        
 
         flowers.forEach(flower => {
             const flowerItem = document.createElement('div');
@@ -43,11 +65,16 @@
             flowerItem.appendChild(flowerPrice);
 
             flowerGrid.appendChild(flowerItem);
-            
+
         });
+
+
         if (!isLoggedIn()) {
             signupBtn.classList.add('hidden');
         }
+
+
     </script>
 </body>
+
 </html>

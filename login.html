@@ -13,17 +13,17 @@
 
     <div id="header">
         <a href="index.html">
-        <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
+            <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
         </a>
-
         <div id="header-icons">
             <span>Track Order</span>
             <img src="icons/help.svg" alt="Help" width="35px" height="35px">
             <div id="cart-icon">
-                <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
-                <span class="item-count">0</span>
+                <a href="order.html">
+                    <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
+                    <span class="item-count">0</span>
+                </a>
             </div>
-            <img src="icons/user.svg" alt="Account" width="35px" height="35px">
         </div>
     </div>
 
@@ -45,7 +45,7 @@
             <p>By Clicking "Register" you agree to the Terms of Use and Privacy Policy (there isnt any)</p>
         </form>
         <form id="login-form">
-            <input type="text" placeholder="Username" id="login-username"  required>
+            <input type="text" placeholder="Username" id="login-username" required>
             <input type="password" placeholder="Password" id="login-password" required>
             <div class="password-toggle">
                 <input type="checkbox" id="show-login-password">
@@ -54,6 +54,7 @@
             <button type="submit" class="submit-btn" id="login-btn">LOG IN</button>
         </form>
     </div>
+
     <script>
         const signupForm = document.getElementById('signup-form');
         const loginForm = document.getElementById('login-form');
@@ -66,6 +67,7 @@
         const showSignupPasswordCheckbox = document.getElementById('show-signup-password');
         const showLoginPasswordCheckbox = document.getElementById('show-login-password');
 
+        loginForm.classList.add('hidden');
         const signupEvent = (event) => {
             event.preventDefault();
             signup();
@@ -78,7 +80,7 @@
 
         signupForm.addEventListener('submit', signupEvent);
         loginForm.addEventListener('submit', loginEvent);
-        
+
         signupBtn.addEventListener('click', () => {
             signupForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
@@ -105,6 +107,11 @@
         showLoginPasswordCheckbox.addEventListener('change', () => {
             loginPasswordInput.type = showLoginPasswordCheckbox.checked ? 'text' : 'password';
         });
+
+        <!-- set cart -->
+        const itemCount = document.querySelector('.item-count');
+        var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+        itemCount.textContent = flowers.length;
     </script>
 </body>
 

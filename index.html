@@ -15,8 +15,10 @@
             <span>Track Order</span>
             <img src="icons/help.svg" alt="Help" width="35px" height="35px">
             <div id="cart-icon">
-                <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
-                <span class="item-count">0</span>
+                <a href="order.html">=
+                    <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
+                    <span class="item-count">0</span>
+                </a>
             </div>
         </div>
     </div>
@@ -147,7 +149,7 @@
             setLocalStorage();
             window.location.href = 'order.html';
         });
-        
+
         flowerItems.forEach(item => {
             item.addEventListener('click', () => {
                 const flowerName = item.querySelector('h3').textContent;
@@ -162,7 +164,7 @@
                 flowerPopup.classList.remove('hidden');
             });
         });
-        
+
         function setLocalStorage() {
             flowers = JSON.parse(localStorage.getItem('flowers')) || [];
             const flower = {
@@ -173,6 +175,8 @@
             flowers.push(flower);
             localStorage.setItem('flowers', JSON.stringify(flowers));
         }
+
+
         <!-- set cart -->
         const itemCount = document.querySelector('.item-count');
         var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
