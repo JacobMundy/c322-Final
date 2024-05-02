@@ -42,16 +42,25 @@ updateNavigationBar();
 function updateNavigationBar() {
     if (isLoggedIn()) {
         document.getElementById('header-icons').innerHTML += `
-        <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <a href="login.html">
+                <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+            </a>
+            <span style="font-size: 10px; color: #888;">Logged In</span>
+        </div>
         `;
     } else {
         document.getElementById('header-icons').innerHTML += `
-        <a href="login.html">
-        <img src="icons/user.svg" alt="Account" width="35px" height="35px">
-        </a>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <a href="login.html">
+                <img src="icons/user.svg" alt="Account" width="35px" height="35px">
+            </a>
+            <span style="font-size: 10px; color: #888;">Not Logged In</span>
+        </div>
         `;
     }
 }
+
 
 
 async function login() {
@@ -84,6 +93,9 @@ async function login() {
 
 }
 
-async function logout() {
-    removeToken();
+function logout() {
+    // Remove the username from localStorage
+    localStorage.removeItem('username');
+    // Refresh the page
+    window.location.reload();
 }

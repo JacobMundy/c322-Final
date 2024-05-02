@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="home.css">
     <link rel="stylesheet" type="text/css" href="login.css">
     <script src="register.js" defer></script>
-    <script src="configuration.js" defer></script>
 </head>
 
 <body>
@@ -16,7 +15,9 @@
             <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
         </a>
         <div id="header-icons">
-            <span>Track Order</span>
+            <a href="track-order.html">
+                <span>Track Order</span>
+            </a>
             <img src="icons/help.svg" alt="Help" width="35px" height="35px">
             <div id="cart-icon">
                 <a href="order.html">
@@ -26,7 +27,10 @@
             </div>
         </div>
     </div>
+    </div>
+    <div id="login-status">
 
+    </div>
     <div class="login-container">
         <h1>SIGN UP TO SAVE</h1>
         <div class="toggle-container">
@@ -54,7 +58,11 @@
             <button type="submit" class="login-btn" id="login-btn">LOG IN</button>
         </form>
     </div>
-
+    <div id="logged-in-container" class="logged-in-container" style="display: none;">
+        <h1>You are currently logged in as <span id="logged-in-username"></span>.</h1>
+        <button id="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <script src="configuration.js"></script>
     <script>
         const signupForm = document.getElementById('signup-form');
         const loginForm = document.getElementById('login-form');
@@ -109,6 +117,28 @@
             loginPasswordInput.type = showLoginPasswordCheckbox.checked ? 'text' : 'password';
         });
 
+        // if (isLoggedIn()) {
+        //     let h1 = document.createElement('h1');
+        //     h1.textContent = 'Welcome back, ' + localStorage.getItem('username');
+        //     document.getElementById('login-status').appendChild(h1);
+        // }
+
+        const username = localStorage.getItem('username');
+        const loginContainer = document.getElementsByClassName('login-container');
+        const loggedInContainer = document.getElementById('logged-in-container');
+        const loggedInUsername = document.getElementById('logged-in-username');
+        const loginStatus = document.getElementById('login-status');
+
+        if (username) {
+            // User is logged in
+            loginContainer[0].style.display = 'none';
+            loggedInContainer.style.display = 'block';
+            loggedInUsername.textContent = username;
+        } else {
+            // User is not logged in
+            loginContainer.style.display = 'block';
+            loggedInContainer.style.display = 'none';
+        }
         <!-- set cart -->
         const itemCount = document.querySelector('.item-count');
         var flowers = JSON.parse(localStorage.getItem('flowers')) || [];

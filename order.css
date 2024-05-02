@@ -120,3 +120,7 @@
   color: #666;
   cursor: not-allowed;
 }
+
+input.invalid, select.invalid {
+    border: 1px solid red;
+  }
