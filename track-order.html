@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User's Orders</title>
+    <link rel="stylesheet" type="text/css" href="home.css">
+    <style>
+        .order-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .order-card img {
+            width: 200px;
+            height: 300px;
+            margin-right: 10px;
+        }
+
+        .order-card .details {
+            flex-grow: 1;
+        }
+
+        #total-cost {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <a href="index.html">
+            <img src="icons/Logo.png" alt="Logo" width="100px" height="100px">
+        </a>
+        <div id="header-icons">
+            <span>Track Order</span>
+            <img src="icons/help.svg" alt="Help" width="35px" height="35px">
+            <div id="cart-icon">
+                <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
+                <span class="item-count">0</span>
+            </div>
+        </div>
+    </div>
+
+    <h1>User's Orders</h1>
+    <div id="orders"></div>
+    <div id="total-cost"></div>
+    <script src="configuration.js"></script>
+    <script>
+        async function loadOrders() {
+            // Assuming the list of orders is fetched from the backend and stored in the `orders` variable
+            const orders = await fetch(getHost() + "/flowers?username=" + localStorage.getItem('username'), {
+                method: "GET",
+                headers: { 'Authorization': 'Bearer ' + configuration.token() }
+            }).then(response => response.json());
+
+            console.log(orders);
+
+            const ordersContainer = document.getElementById('orders');
+            const totalCostContainer = document.getElementById('total-cost');
+            let totalCost = 0;
+            
+            orders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.classList.add('order-card');
+
+                const flowerIcon = document.createElement('img');
+                flowerIcon.src = `products/flower${order.flowerPicNum}.jpg`;
+                orderCard.appendChild(flowerIcon);
+
+                const detailsContainer = document.createElement('div');
+                detailsContainer.classList.add('details');
+
+                const flowerName = document.createElement('h3');
+                flowerName.textContent = order.flowerName;
+                detailsContainer.appendChild(flowerName);
+
+                const deliveryDate = document.createElement('p');
+                deliveryDate.textContent = `Delivery Date: ${order.date}`;
+                detailsContainer.appendChild(deliveryDate);
+
+                const customerName = document.createElement('p');
+                customerName.textContent = `Customer: ${order.firstName} ${order.lastName}`;
+                detailsContainer.appendChild(customerName);
+
+                const relationship = document.createElement('p');
+                relationship.textContent = `Relationship: ${order.relationship}`;
+                detailsContainer.appendChild(relationship);
+
+                const address = document.createElement('p');
+                address.textContent = `Address: ${order.address}, ${order.aptOrSuite}, ${order.city}, ${order.state} ${order.zip}`;
+                detailsContainer.appendChild(address);
+
+                const cost = document.createElement('p');
+                cost.textContent = `Cost: $${order.cost}`;
+                detailsContainer.appendChild(cost);
+
+                orderCard.appendChild(detailsContainer);
+                ordersContainer.appendChild(orderCard);
+
+                totalCost += order.cost;
+            });
+            totalCostContainer.textContent = `Total Cost: $${totalCost.toFixed(2)}`;
+        }
+        loadOrders();
+    </script>
+</body>
+
+</html>

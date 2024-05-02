@@ -75,6 +75,7 @@
 
         const loginEvent = (event) => {
             event.preventDefault();
+            localStorage.setItem('username', document.getElementById('login-username').value);
             login();
         }
 

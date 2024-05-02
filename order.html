@@ -167,6 +167,74 @@
             option.textContent = state;
             stateSelect.appendChild(option);
         });
+
+        // Add an event listener to the continue button
+        continueBtn.addEventListener('click', () => {
+            // Get the form input values
+            const username = 'w'; // Replace with the actual username or remove if not needed
+            const firstName = document.querySelector('#recipient-details input[placeholder="First Name*"]').value;
+            const lastName = document.querySelector('#recipient-details input[placeholder="Last Name*"]').value;
+            const relationship = document.querySelector('#recipient-details select').value;
+            const address = document.querySelector('#delivery-details input[placeholder="Address*"]').value;
+            const city = document.querySelector('#delivery-details input[placeholder="City*"]').value;
+            const state = document.querySelector('#delivery-details select').value;
+            const zip = document.querySelector('#delivery-details input[placeholder="Zip Code*"]').value;
+            const aptOrSuite = document.querySelector('#delivery-details input[placeholder="Apt/Suite"]').value || null;
+            const date = null; // Replace with the appropriate date value or remove if not needed
+
+            // Get the flowers from localStorage
+            const flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+
+            // Prepare the data to be sent in the request body
+            const data = flowers.map(flower => {
+                const { name, image } = flower;
+                let date = flower.date;
+                let flowerPicNum = image.split('/').pop().split('.')[0]; // Extract the picture number from the image URL
+                flowerPicNum = parseInt(flowerPicNum.replace('flower', '')); // Convert the picture number to an integer
+                
+                return {
+                    username,
+                    flowerName: name,
+                    flowerPicNum,
+                    firstName,
+                    lastName,
+                    relationship,
+                    address,
+                    city,
+                    state,
+                    zip,
+                    date,
+                    aptOrSuite: aptOrSuite || undefined, // Use undefined if aptOrSuite is null or an empty string
+                    cost: flower.price + 15 // Add the delivery fee to the flower price
+
+                };
+            });
+            console.log(data);
+            // Send the POST request to the backend host
+            fetch(getHost() + '/flowers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + configuration.token()
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    // Handle the response from the server
+                    console.log('Response:', response);
+                    if (response.status === 200) {
+                        localStorage.removeItem('flowers'); // Clear the flowers from localStorage
+                        window.location = 'track-order.html';
+                    } else {
+                        // Display an error message to the user
+                        alert('Something went wrong. Please try again or contact the customer support team.');
+                    }
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during the request
+                    console.error('Error:', error);
+                });
+        });
     </script>
 </body>
 
