@@ -206,8 +206,6 @@
                 return `${year}-${month}-${day}`;
             }
 
-
-            <!-- set cart -->
             const itemCount = document.querySelector('.item-count');
             var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
             itemCount.textContent = flowers.length;
