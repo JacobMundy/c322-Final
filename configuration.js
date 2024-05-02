@@ -4,11 +4,11 @@ const host_local = 'http://localhost:8080';
 const host_remote = 'TODO';
 
 function getHost() {
-  return mode === 0 ? host_local : host_remote;
+    return mode === 0 ? host_local : host_remote;
 }
 
 function isLoggedIn() {
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
         return true;
     } else {
         return false;
@@ -21,7 +21,7 @@ function getToken() {
 
 function setToken(token) {
     localStorage
-    .setItem('token', token);
+        .setItem('token', token);
     updateNavigationBar();
 }
 
@@ -57,7 +57,7 @@ function updateNavigationBar() {
 async function login() {
     let username = document.getElementById('login-username').value;
     let password = document.getElementById('login-password').value;
-    let customer = {username: username, password: password};
+    let customer = { username: username, password: password };
     let request = {
         method: 'POST',
         headers: {
@@ -66,16 +66,16 @@ async function login() {
         body: JSON.stringify(customer)
     };
     try {
-    fetch(configuration.host() + '/signin', request)
-    .then(async response => {
-        if(response.ok) {
-            const token = await response.text();
-            setToken(token);
-            location.href = 'index.html';
-        } else {
-            throw new Error('Login failed');
-        }
-    })
+        fetch(configuration.host() + '/signin', request)
+            .then(async response => {
+                if (response.ok) {
+                    const token = await response.text();
+                    setToken(token);
+                    location.href = 'index.html';
+                } else {
+                    throw new Error('Login failed');
+                }
+            })
     } catch (error) {
         console.log(error);
         removeToken();

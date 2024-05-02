@@ -1,93 +1,92 @@
 /* Login/Signup Container */
 .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Headings */
 .login-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
 }
 
 /* Toggle Buttons */
 .toggle-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .toggle-btn {
-    background-color: #f2f2f2;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #f2f2f2;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .toggle-btn.active {
-    background-color: #ff6f00;
-    color: #fff;
+  background-color: #ff6f00;
+  color: #fff;
 }
 
 /* Forms */
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
 }
 
 .password-toggle {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .password-toggle input[type="checkbox"] {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 #register-btn,
 .login-btn {
-    background-color: #ff6f00;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #ff6f00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #register-btn:hover,
 .login-btn:hover {
-    background-color: #e66000;
+  background-color: #e66000;
 }
 
 /* Terms and Conditions */
 .login-container p {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
 }
 
-
 .hidden {
-    display: none;
+  display: none;
 }
