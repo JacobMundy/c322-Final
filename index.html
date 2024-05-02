@@ -67,158 +67,214 @@
             <div class="dropdown">
                 <button class="dropbtn">Flower Type</button>
                 <div class="dropdown-content">
-                    <a href="#">Roses</a>
-                    <a href="#">Lilies</a>
-                    <a href="#">Tulips</a>
+                    <a href="#" id="roses">Roses</a>
+                    <a href="#" id="lilies">Lilies</a>
+                    <a href="#" id="tulips">Tulips</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">Occasion</button>
                 <div class="dropdown-content">
-                    <a href="#">Birthday</a>
-                    <a href="#">Anniversary</a>
-                    <a href="#">Get Well Soon</a>
+                    <a href="#" id="birthday">Birthday</a>
+                    <a href="#" id="anniversary">Anniversary</a>
+                    <a href="#" id="get-well-soon">Get Well Soon</a>
                 </div>
             </div>
             <div class="dropdown">
                 <button class="dropbtn">Color</button>
                 <div class="dropdown-content">
-                    <a href="#">Red</a>
-                    <a href="#">Yellow</a>
-                    <a href="#">Pink</a>
+                    <a href="#" id="red">Red</a>
+                    <a href="#" id="yellow">Yellow</a>
+                    <a href="#" id="pink">Pink</a>
                 </div>
             </div>
-            <div class="dropdown">
-                <button class="dropbtn">Sort LOW to HIGH</button>
-                <div class="dropdown-content">
-                    <a href="#">LOW to HIGH</a>
-                    <a href="#">HIGH to LOW</a>
-                </div>
-            </div>
+
         </div>
         <div class="flower-grid">
-            <div class="flower-item">
+            <div class="flower-item" data-type="roses" data-occasion="birthday" data-color="pink">
                 <img src="products/flower1.jpg" alt="Flower 1">
                 <h3>SUGAR RUSH</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="lilies" data-occasion="anniversary" data-color="pink">
                 <img src="products/flower2.jpg" alt="Flower 2">
                 <h3>LEMONADE</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="tulips" data-occasion="get well soon" data-color="red">
                 <img src="products/flower3.jpg" alt="Flower 3">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="tulips" data-occasion="birthday" data-color="orange">
                 <img src="products/flower4.jpg" alt="Flower 4">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="roses" data-occasion="anniversary" data-color="pink">
                 <img src="products/flower5.jpg" alt="Flower 5">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="roses" data-occasion="anniversary" data-color="pink">
                 <img src="products/flower6.jpg" alt="Flower 6">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="roses" data-occasion="get well soon" data-color="pink">
                 <img src="products/flower7.jpg" alt="Flower 7">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
-            <div class="flower-item">
+            <div class="flower-item" data-type="tulips" data-occasion="anniversary" data-color="pink">
                 <img src="products/flower8.jpg" alt="Flower 8">
                 <h3>SPRING BLOSSOMS</h3>
                 <p>from $54</p>
             </div>
         </div>
-    </div>
-    <script src="configuration.js"></script>
-    <script>
-        const flowerItems = document.querySelectorAll('.flower-item');
-        const flowerPopup = document.getElementById('flower-popup');
-        const popupImage = document.getElementById('popup-image');
-        const popupName = document.getElementById('popup-name');
-        const popupPrice = document.getElementById('popup-price');
-        const popupOneTimePrice = document.getElementById('popup-one-time-price');
-        const addToBasket = document.getElementById('add-to-basket');
+        <script src="configuration.js"></script>
+        <script>
+            const flowerItems = document.querySelectorAll('.flower-item');
+            const flowerPopup = document.getElementById('flower-popup');
+            const popupImage = document.getElementById('popup-image');
+            const popupName = document.getElementById('popup-name');
+            const popupPrice = document.getElementById('popup-price');
+            const popupOneTimePrice = document.getElementById('popup-one-time-price');
+            const addToBasket = document.getElementById('add-to-basket');
 
 
-        addToBasket.addEventListener('click', () => {
-            setLocalStorage();
-            window.location.href = 'order.html';
-        });
-
-        flowerPopup.addEventListener('click', () => {
-            flowerPopup.classList.add('hidden');
-        });
-
-        flowerItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const flowerName = item.querySelector('h3').textContent;
-                const flowerImage = item.querySelector('img').src;
-                const flowerPrice = item.querySelector('p').textContent;
-
-                popupImage.src = flowerImage;
-                popupName.textContent = flowerName;
-                popupPrice.textContent = flowerPrice;
-                let price = parseInt(flowerPrice.replace('from $', ''));
-                price += 20
-                popupOneTimePrice.textContent = "$" + price;
-                flowerPopup.classList.remove('hidden');
+            addToBasket.addEventListener('click', () => {
+                setLocalStorage();
+                window.location.href = 'order.html';
             });
-        });
 
-        function setLocalStorage() {
-            flowers = JSON.parse(localStorage.getItem('flowers')) || [];
-            var getSelectedPlan = document.querySelector('input[name="purchase-option"]:checked').value;
-            if (getSelectedPlan == 'monthly') {
-                popupPrice.textContent = "54";
-            } else {
-                popupPrice.textContent = popupOneTimePrice.textContent.replace('$', '');
+            flowerPopup.addEventListener('click', () => {
+                flowerPopup.classList.add('hidden');
+            });
+
+            flowerItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const flowerName = item.querySelector('h3').textContent;
+                    const flowerImage = item.querySelector('img').src;
+                    const flowerPrice = item.querySelector('p').textContent;
+
+                    popupImage.src = flowerImage;
+                    popupName.textContent = flowerName;
+                    popupPrice.textContent = flowerPrice;
+                    let price = parseInt(flowerPrice.replace('from $', ''));
+                    price += 20
+                    popupOneTimePrice.textContent = "$" + price;
+                    flowerPopup.classList.remove('hidden');
+                });
+            });
+
+            function setLocalStorage() {
+                flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+                var getSelectedPlan = document.querySelector('input[name="purchase-option"]:checked').value;
+                if (getSelectedPlan == 'monthly') {
+                    popupPrice.textContent = "54";
+                } else {
+                    popupPrice.textContent = popupOneTimePrice.textContent.replace('$', '');
+                }
+                const flower = {
+                    name: popupName.textContent,
+                    price: parseInt(popupPrice.textContent),
+                    image: popupImage.src,
+                    date: document.getElementById('delivery-date').value
+                };
+                flowers.push(flower);
+                localStorage.setItem('flowers', JSON.stringify(flowers));
             }
-            const flower = {
-                name: popupName.textContent,
-                price: parseInt(popupPrice.textContent),
-                image: popupImage.src,
-                date: document.getElementById('delivery-date').value
-            };
-            flowers.push(flower);
-            localStorage.setItem('flowers', JSON.stringify(flowers));
-        }
 
-        const deliveryDateInput = document.getElementById('delivery-date');
-        const today = new Date();
-        const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+            const deliveryDateInput = document.getElementById('delivery-date');
+            const today = new Date();
+            const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
 
-        deliveryDateInput.valueAsDate = nextWeek;
-        deliveryDateInput.min = formatDate(today);
+            deliveryDateInput.valueAsDate = nextWeek;
+            deliveryDateInput.min = formatDate(today);
 
-        function formatDate(date) {
-            const year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            if (month < 10) {
-                month = '0' + month;
+            function formatDate(date) {
+                const year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                let day = date.getDate();
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                return `${year}-${month}-${day}`;
             }
-            let day = date.getDate();
-            if (day < 10) {
-                day = '0' + day;
+
+
+            <!-- set cart -->
+            const itemCount = document.querySelector('.item-count');
+            var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+            itemCount.textContent = flowers.length;
+
+            // Get all filter dropdown links
+            const flowerTypeLinks = document.querySelectorAll('.dropdown-content #roses, .dropdown-content #lilies, .dropdown-content #tulips');
+            const occasionLinks = document.querySelectorAll('.dropdown-content #birthday, .dropdown-content #anniversary, .dropdown-content #get-well-soon');
+            const colorLinks = document.querySelectorAll('.dropdown-content #red, .dropdown-content #yellow, .dropdown-content #pink');
+           
+            // Function to show/hide flower items based on filters
+            function filterFlowers(type, occasion, color) {
+                const flowerItems = document.querySelectorAll('.flower-item');
+                flowerItems.forEach(item => {
+                    const itemType = item.dataset.type.toLowerCase();
+                    const itemOccasion = item.dataset.occasion.toLowerCase();
+                    const itemColor = item.dataset.color.toLowerCase();
+                    let showItem = true;
+
+                    if (type !== 'all') {
+                        showItem = showItem && (itemType === type.toLowerCase());
+                    }
+
+                    if (occasion !== 'all') {
+                        showItem = showItem && (itemOccasion === occasion.toLowerCase());
+                    }
+
+                    if (color !== 'all') {
+                        showItem = showItem && (itemColor === color.toLowerCase());
+                    }
+
+                    if (showItem) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
             }
-            return `${year}-${month}-${day}`;
-        }
 
+            // Add event listeners to filter dropdown links
+            flowerTypeLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const type = link.textContent.toLowerCase();
+                    filterFlowers(type, 'all', 'all');
+                });
+            });
 
-        <!-- set cart -->
-        const itemCount = document.querySelector('.item-count');
-        var flowers = JSON.parse(localStorage.getItem('flowers')) || [];
-        itemCount.textContent = flowers.length;
-    </script>
+            occasionLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const occasion = link.textContent.toLowerCase();
+                    console.log(occasion);
+                    filterFlowers('all', occasion, 'all');
+                });
+            });
+
+            colorLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const color = link.textContent.toLowerCase();
+                    filterFlowers('all', 'all', color);
+                });
+            });
+
+            // Show all flower items by default
+            filterFlowers('all', 'all', 'all');
+        </script>
 </body>
 
 </html>
