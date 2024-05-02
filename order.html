@@ -4,6 +4,7 @@
 <head>
     <title>Order Page</title>
     <link rel="stylesheet" type="text/css" href="home.css">
+    <link rel="stylesheet" type="text/css" href="order.css">
 </head>
 
 <body>
@@ -21,34 +22,86 @@
         </div>
     </div>
 
+    <div class="progress-indicator">
+        <span class="active">REVIEW</span>
+        <span>DELIVERY</span>
+        <span>DONE</span>
+    </div>
+
+    <div class="login-prompt">
+        <button id="loginBtn" onclick="window.location=`login.html`">LOG IN</button>
+        <button id="signupBtn" onclick="window.location=`login.html`">SIGN UP</button>
+    </div>
+
     <div class="flower-grid">
-
+        <!-- Flower items will be added here -->
     </div>
 
-    <div id="order-form">
-        <h1>Order Form</h1>
-        <form>
-            <input type="text" placeholder="Name
-            " required>
-            <input type="email" placeholder="Email" required>
-            <input type="text" placeholder="Address" required>
 
+    <div id="recipient-details">
+        <h1>REVIEW YOUR ORDER </h1>
 
+        <h2>ORDER COST: <span id="order-cost"></span> </h2>
+
+        <h2>RECIPIENT</h2>
+        <div class="input-group">
+            <input type="text" placeholder="First Name*" required>
+            <input type="text" placeholder="Last Name*" required>
+        </div>
+        <div class="input-group">
+            <div class="select-wrapper">
+                <select style="width: 100%;" required>
+                    <option value="" disabled selected>Relationship*</option>
+                    <option value="friend">Friend</option>
+                    <option value="family">Family</option>
+                    <option value="colleague">Colleague</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
     </div>
+
+    <div id="delivery-details">
+        <h2>DELIVER TO</h2>
+        <div class="input-group">
+            <input type="text" placeholder="Address*" style="width: 100%;" required>
+        </div>
+        <div class="input-group">
+            <input type="text" placeholder="Apt/Suite">
+            <input type="text" placeholder="City*" required>
+        </div>
+        <div class="input-group">
+            <div class="select-wrapper">
+                <select style="width: 100%;" required>
+                    <option value="" disabled selected>State*</option>
+                    <!-- Add state options here -->
+                </select>
+            </div>
+            <input type="text" placeholder="Zip Code*" required>
+        </div>
+        <p class="note">We cannot ship to PO Boxes</p>
+    </div>
+
+    <button class="continue-btn">CONTINUE</button>
+    <p class="delivery-note">Taxes and delivery calculated later</p>
+
     <script src="configuration.js"></script>
     <script>
         const orderForm = document.getElementById('order-form');
         const flowerGrid = document.querySelector('.flower-grid');
         const flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+        var cost = 0;
 
-        <!-- set cart -->
+        // Update the item count in the cart icon
         const itemCount = document.querySelector('.item-count');
         itemCount.textContent = flowers.length;
-        
 
+        // Add flower items to the grid
         flowers.forEach(flower => {
             const flowerItem = document.createElement('div');
             flowerItem.classList.add('flower-item');
+
+            cost += parseInt(flower.price);
 
             const flowerImage = document.createElement('img');
             flowerImage.src = flower.image;
@@ -61,19 +114,59 @@
             flowerItem.appendChild(flowerName);
 
             const flowerPrice = document.createElement('p');
-            flowerPrice.textContent = flower.price;
+            flowerPrice.textContent = '$' + flower.price;
             flowerItem.appendChild(flowerPrice);
 
-            flowerGrid.appendChild(flowerItem);
+            const flowerDate = document.createElement('p');
+            flowerDate.textContent = "Delivery Date: ";
+            flowerDate.textContent += flower.date;
+            flowerItem.appendChild(flowerDate);
 
+            flowerGrid.appendChild(flowerItem);
         });
 
+        document.getElementById('order-cost').textContent = `$${cost}`;
 
-        if (!isLoggedIn()) {
-            signupBtn.classList.add('hidden');
+        // Toggle login/signup buttons based on user's login status
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const continueBtn = document.querySelector('.continue-btn');
+
+        if (isLoggedIn()) {
+            loginBtn.style.display = 'none';
+            signupBtn.style.display = 'none';
+            continueBtn.disabled = false;
+            continueBtn.classList.remove('disabled');
+
+        } else {
+            continueBtn.disabled = true;
+            continueBtn.classList.add('disabled');
+            loginBtn.style.display = 'block';
+            signupBtn.style.display = 'block';
+            continueBtn.disabled = true;
+            continueBtn.classList.add('disabled');
         }
+        // Add state options to the select element
+        const stateSelect = document.querySelector('#delivery-details .select-wrapper select');
 
+        const stateOptions = [
+            'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+            'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+            'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+            'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+            'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma',
+            'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+            'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
+            'Wisconsin', 'Wyoming'
+        ];
 
+        stateOptions.forEach(state => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
     </script>
 </body>
 

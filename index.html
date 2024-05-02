@@ -15,7 +15,7 @@
             <span>Track Order</span>
             <img src="icons/help.svg" alt="Help" width="35px" height="35px">
             <div id="cart-icon">
-                <a href="order.html">=
+                <a href="order.html">
                     <img src="icons/cart.svg" alt="Cart" width="35px" height="35px">
                     <span class="item-count">0</span>
                 </a>
@@ -33,21 +33,22 @@
     </div>
 
     <div id="flower-popup" class="hidden">
-        <div class="popup-content">
+        <div class="popup-content" onclick="event.stopPropagation();">
             <img id="popup-image" src="" alt="Flower Image" style="width: 400px;">
             <div class="popup-details">
                 <h2 id="popup-name"></h2>
                 <p id="popup-price"></p>
+                <input type="date" id="delivery-date" required>
                 <div class="purchasing-options">
                     <div class="subscription-option">
-                        <input type="radio" id="subscription" name="purchase-option">
-                        <label for="subscription">Start a Subscription: $52 + free shipping</label>
+                        <input type="radio" id="subscription" name="purchase-option" value="monthly">
+                        <label for="subscription">Start a Subscription: $54 + free shipping</label>
                         <p>Best Value: Up to 20% off + free shipping on subscription deliveries.</p>
                         <p>Flexible: Pick your flowers, date & recipient every month, or set it & forget it.</p>
                         <p>No Obligations: Skip as often as you like. Cancel anytime.</p>
                     </div>
                     <div class="one-time-option">
-                        <input type="radio" id="one-time" name="purchase-option" checked>
+                        <input type="radio" id="one-time" name="purchase-option" value="one-time" checked>
                         <label for="one-time">One time purchase: <span id="popup-one-time-price"></span></label>
                     </div>
                 </div>
@@ -55,6 +56,7 @@
             </div>
         </div>
     </div>
+
 
     <div id="flower-collection">
         <div class="filter-bar">
@@ -150,6 +152,10 @@
             window.location.href = 'order.html';
         });
 
+        flowerPopup.addEventListener('click', () => {
+            flowerPopup.classList.add('hidden');
+        });
+
         flowerItems.forEach(item => {
             item.addEventListener('click', () => {
                 const flowerName = item.querySelector('h3').textContent;
@@ -159,21 +165,49 @@
                 popupImage.src = flowerImage;
                 popupName.textContent = flowerName;
                 popupPrice.textContent = flowerPrice;
-                popupOneTimePrice.textContent = flowerPrice.replace('from ', '');
-
+                let price = parseInt(flowerPrice.replace('from $', ''));
+                price += 20
+                popupOneTimePrice.textContent = "$" + price;
                 flowerPopup.classList.remove('hidden');
             });
         });
 
         function setLocalStorage() {
             flowers = JSON.parse(localStorage.getItem('flowers')) || [];
+            var getSelectedPlan = document.querySelector('input[name="purchase-option"]:checked').value;
+            if (getSelectedPlan == 'monthly') {
+                popupPrice.textContent = "54";
+            } else {
+                popupPrice.textContent = popupOneTimePrice.textContent.replace('$', '');
+            }
             const flower = {
                 name: popupName.textContent,
-                price: popupPrice.textContent,
-                image: popupImage.src
+                price: parseInt(popupPrice.textContent),
+                image: popupImage.src,
+                date: document.getElementById('delivery-date').value
             };
             flowers.push(flower);
             localStorage.setItem('flowers', JSON.stringify(flowers));
+        }
+
+        const deliveryDateInput = document.getElementById('delivery-date');
+        const today = new Date();
+        const nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
+
+        deliveryDateInput.valueAsDate = nextWeek;
+        deliveryDateInput.min = formatDate(today);
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            if (month < 10) {
+                month = '0' + month;
+            }
+            let day = date.getDate();
+            if (day < 10) {
+                day = '0' + day;
+            }
+            return `${year}-${month}-${day}`;
         }
 
 
